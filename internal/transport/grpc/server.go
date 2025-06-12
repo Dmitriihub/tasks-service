@@ -4,19 +4,17 @@ import (
 	"net"
 
 	taskpb "github.com/Dmitriihub/project-protos/proto/task"
+	userpb "github.com/Dmitriihub/project-protos/proto/user"
 	"github.com/Dmitriihub/tasks-service/internal/task"
 	"google.golang.org/grpc"
 )
 
-func RunGRPC(svc *task.Service, uc taskpb.UserServiceClient) error {
+func RunGRPC(svc *task.Service, uc userpb.UserServiceClient) error {
 	lis, err := net.Listen("tcp", ":50052")
 	if err != nil {
 		return err
 	}
-
-	grpcServer := grpc.NewServer()
-	handler := NewHandler(svc, uc)
-	taskpb.RegisterTaskServiceServer(grpcServer, handler)
-
-	return grpcServer.Serve(lis)
+	grpcSrv := grpc.NewServer()
+	taskpb.RegisterTaskServiceServer(grpcSrv, NewHandler(svc, uc))
+	return grpcSrv.Serve(lis)
 }

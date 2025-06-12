@@ -8,9 +8,9 @@ func NewService(repo *Repository) *Service {
 	return &Service{repo: repo}
 }
 
-func (s *Service) CreateTask(t Task) (*Task, error) {
-	err := s.repo.Create(&t)
-	return &t, err
+func (s *Service) CreateTask(task Task) (*Task, error) {
+	err := s.repo.Create(&task)
+	return &task, err
 }
 
 func (s *Service) GetTaskByID(id uint) (*Task, error) {
@@ -22,12 +22,12 @@ func (s *Service) GetAllTasks() ([]Task, error) {
 }
 
 func (s *Service) GetTasksByUser(userID uint) ([]Task, error) {
-	return s.repo.GetByUser(userID)
+	return s.repo.GetByUserID(userID)
 }
 
-func (s *Service) UpdateTask(t *Task) (*Task, error) {
-	err := s.repo.Update(t)
-	return t, err
+func (s *Service) UpdateTask(task Task) (*Task, error) {
+	err := s.repo.Update(&task)
+	return &task, err
 }
 
 func (s *Service) DeleteTask(id uint) error {

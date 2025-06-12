@@ -26,7 +26,7 @@ func (r *Repository) GetAll() ([]Task, error) {
 	return tasks, err
 }
 
-func (r *Repository) GetByUser(userID uint) ([]Task, error) {
+func (r *Repository) GetByUserID(userID uint) ([]Task, error) {
 	var tasks []Task
 	err := r.db.Where("user_id = ?", userID).Find(&tasks).Error
 	return tasks, err
